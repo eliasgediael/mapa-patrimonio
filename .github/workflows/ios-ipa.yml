@@ -39,9 +39,9 @@ jobs:
         run: |
           mkdir Payload
           cp -R build/Build/Products/Release-iphoneos/*.app Payload/
-          zip -qry MapaPatrimonio.ipa Payload
+          zip -qry Rumo.ipa Payload
 
       - uses: actions/upload-artifact@v4
         with:
-          name: MapaPatrimonio-ipa
-          path: MapaPatrimonio.ipa
+          name: Rumo-ipa
+          path: Rumo.ipa
