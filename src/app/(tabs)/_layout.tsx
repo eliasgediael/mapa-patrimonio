@@ -8,6 +8,7 @@ const TABS: { name: string; title: string; icon: IconName; iconOn: IconName }[] 
   { name: 'index', title: 'Mapa', icon: 'home-outline', iconOn: 'home' },
   { name: 'forecast', title: 'Projeção', icon: 'analytics-outline', iconOn: 'analytics' },
   { name: 'flow', title: 'Fluxo', icon: 'swap-vertical-outline', iconOn: 'swap-vertical' },
+  { name: 'people', title: 'Pessoas', icon: 'people-outline', iconOn: 'people' },
   { name: 'whatif', title: 'E se?', icon: 'help-circle-outline', iconOn: 'help-circle' },
   { name: 'settings', title: 'Ajustes', icon: 'settings-outline', iconOn: 'settings' },
 ];

@@ -22,6 +22,12 @@ export interface Account {
   annualRate?: number;
   /** Só para dívida: parcela mensal que sai do caixa e abate o saldo. */
   monthlyPayment?: Cents;
+  /**
+   * Acertos com data marcada (ex.: parcelas combinadas com alguém).
+   * Dívida: o valor sai do caixa e abate o saldo. Demais tipos: o valor entra no caixa e sai do saldo.
+   * Nunca passa do saldo que ainda resta.
+   */
+  schedule?: { month: YearMonth; amount: Cents }[];
 }
 
 export type Frequency = 'monthly' | 'yearly' | 'once';

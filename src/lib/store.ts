@@ -1,4 +1,5 @@
 import type { Account, Cents, Goal, RecurringItem, Scenario, ValueMode } from '../engine';
+import type { Person, SharedEntry } from './people';
 
 export interface Waypoint {
   id: string;
@@ -22,6 +23,8 @@ export interface AppState {
   goals: Goal[];
   waypoints: Waypoint[];
   settings: Settings;
+  people: Person[];
+  sharedEntries: SharedEntry[];
 }
 
 export const initialState: AppState = {
@@ -32,6 +35,8 @@ export const initialState: AppState = {
   goals: [],
   waypoints: [],
   settings: { annualInflation: 0.045, defaultInvestmentReturn: 0.1, valueMode: 'real' },
+  people: [],
+  sharedEntries: [],
 };
 
 export type Action =
@@ -43,7 +48,11 @@ export type Action =
   | { type: 'goal/add' | 'goal/update'; goal: Goal }
   | { type: 'goal/remove'; id: string }
   | { type: 'checkin'; id: string; date: string; balances: Record<string, Cents> }
-  | { type: 'settings/update'; settings: Partial<Settings> };
+  | { type: 'settings/update'; settings: Partial<Settings> }
+  | { type: 'person/add' | 'person/update'; person: Person }
+  | { type: 'person/remove'; id: string }
+  | { type: 'shared/add' | 'shared/update'; entry: SharedEntry }
+  | { type: 'shared/remove'; id: string };
 
 export function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
@@ -83,6 +92,24 @@ export function reducer(state: AppState, action: Action): AppState {
 
     case 'settings/update':
       return { ...state, settings: { ...state.settings, ...action.settings } };
+
+    case 'person/add':
+      return { ...state, people: [...state.people, action.person] };
+    case 'person/update':
+      return { ...state, people: replaceById(state.people, action.person) };
+    case 'person/remove':
+      return {
+        ...state,
+        people: state.people.filter((p) => p.id !== action.id),
+        sharedEntries: state.sharedEntries.filter((e) => e.personId !== action.id),
+      };
+
+    case 'shared/add':
+      return { ...state, sharedEntries: [...state.sharedEntries, action.entry] };
+    case 'shared/update':
+      return { ...state, sharedEntries: replaceById(state.sharedEntries, action.entry) };
+    case 'shared/remove':
+      return { ...state, sharedEntries: state.sharedEntries.filter((e) => e.id !== action.id) };
   }
 }
 

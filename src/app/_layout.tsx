@@ -19,6 +19,8 @@ export default function RootLayout() {
           <Stack.Screen name="account/[id]" options={{ presentation: 'modal' }} />
           <Stack.Screen name="goal/[id]" options={{ presentation: 'modal' }} />
           <Stack.Screen name="item/[id]" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="person/[id]" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="entry/[id]" options={{ presentation: 'modal' }} />
         </Stack>
       </AppStateProvider>
     </ThemeProvider>

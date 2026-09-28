@@ -18,6 +18,7 @@ import { splitYearsMonths } from '../../engine';
 import { formatBRL, formatCompactBRL, formatCountdown, formatMonthLong, formatPercent, relativeTime } from '../../lib/format';
 import { useAppState } from '../../lib/AppStateProvider';
 import {
+  allAccounts,
   buildProjection,
   currentYearMonth,
   goalProgress,
@@ -33,7 +34,7 @@ export default function MapScreen() {
   const now = new Date();
 
   const projection = useMemo(() => buildProjection(state), [state]);
-  const netWorth = netWorthOf(state.accounts);
+  const netWorth = netWorthOf(allAccounts(state, currentYearMonth(now)));
   const surplus = monthlySurplus(state, currentYearMonth(now));
   const history = waypointHistory(state);
   const last = history[0];

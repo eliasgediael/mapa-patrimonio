@@ -10,7 +10,7 @@ import type { Account, MonthSnapshot, ProjectionInput, RecurringItem, YearMonth 
  *
  * Ordem dentro de cada mês:
  *   1. cada conta rende/valoriza/cobra juros sobre o saldo de abertura;
- *   2. parcelas de dívida saem do caixa e abatem a dívida;
+ *   2. parcelas de dívida saem do caixa e abatem a dívida; acertos agendados movem saldo ↔ caixa;
  *   3. receitas e despesas do mês entram/saem do caixa.
  */
 export function project(input: ProjectionInput): MonthSnapshot[] {
@@ -54,6 +54,15 @@ export function project(input: ProjectionInput): MonthSnapshot[] {
       const payment = Math.min(s.account.monthlyPayment, Math.max(s.balance, 0));
       s.balance -= payment;
       cashTarget.balance -= payment;
+    }
+
+    for (const s of state) {
+      for (const due of s.account.schedule ?? []) {
+        if (due.month !== month) continue;
+        const amount = Math.min(due.amount, Math.max(s.balance, 0));
+        s.balance -= amount;
+        cashTarget.balance += s.account.type === 'debt' ? -amount : amount;
+      }
     }
 
     for (const it of allItems) {
