@@ -1,13 +1,16 @@
 {
   "expo": {
-    "name": "mapa-patrimonio",
+    "name": "Mapa Patrimônio",
     "slug": "mapa-patrimonio",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "scheme": "mapapatrimonio",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#000000",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.eliasgediael.mapapatrimonio"
     },
     "android": {
       "adaptiveIcon": {
@@ -20,6 +23,14 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-status-bar",
+      "expo-sqlite"
+    ],
+    "experiments": {
+      "typedRoutes": true
     }
   }
 }
